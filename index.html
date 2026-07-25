@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+  <title>Lilliana Uribe · Dev PWA</title>
+  <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkxpbGxpYW5hIFVyaWJlIC0gRGV2IiwKICAic2hvcnRfbmFtZSI6ICJMaWxsaWFuYVUiLAogICJzdGFydF91cmwiOiAiLiIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiIzBEMTExNyIsCiAgInRoZW1lX2NvbG9yIjogIiM1OEE2RkYiLAogICJpY29ucyI6IFsKICAgIHsKICAgICAgInNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWwsJTNDc3ZnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zycgdmlld0JveD0nMCAwIDEwMCAxMDAlJyUzRSUzQ3JlY3Qgd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgZmlsbD0nJTIzMEQxMTE3Jy8lM0UlM0N0ZXh0IHg9JzUwJScgeT0nNTAlJyBkeD0nMCcgZHk9JzAnIHRleHQtYW5jaG9yPSdtaWRkbGUnIGRvbWluYW50LWJhc2VsaW5lPSJjZW50cmFsIiBmb250LXNpemU9JzUwJyBmaWxsPSclMjM1OEE2RkYnJTNFTCUzQy90ZXh0JTNFJTNDL3N2ZyUzRQoiLAogICAgICAic2l6ZXMiOiAiNTEyeDUxMiIsCiAgICAgICJ0eXBlIjogImltYWdlL3N2Zyt4bWwiLAogICAgICAicHVycG9zZSI6ICJhbnkgbWFza2FibGUiCiAgICB9CiAgXQp9" />
+  <style>
+    /* ----- reset & base ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: #0D1117;
+      color: #C9D1D9;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      padding: 1.5rem 1rem 3rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .pwa-container {
+      max-width: 1100px;
+      width: 100%;
+    }
+
+    /* ----- tipografía ----- */
+    h1, h2, h3 {
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    h1 { font-size: 2.2rem; color: #F0F6FC; }
+    h2 { font-size: 1.6rem; color: #58A6FF; border-bottom: 2px solid #21262D; padding-bottom: 0.4rem; margin: 2rem 0 1.2rem; }
+    h3 { font-size: 1.2rem; color: #F0F6FC; margin: 1.5rem 0 0.8rem; }
+    a { color: #58A6FF; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ----- badges / chips ----- */
+    .badge-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 0.6rem;
+      margin: 0.5rem 0 0.8rem;
+    }
+    .badge-grid img {
+      height: 28px;
+      border-radius: 4px;
+    }
+    .tech-badge {
+      background: #21262D;
+      padding: 0.3rem 1rem 0.3rem 0.8rem;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      border: 1px solid #30363D;
+      color: #C9D1D9;
+    }
+    .tech-badge i { font-style: normal; font-weight: 500; }
+
+    /* ----- cards / secciones ----- */
+    .card-section {
+      background: #161B22;
+      border-radius: 16px;
+      padding: 1.5rem 1.2rem;
+      margin: 1.2rem 0;
+      border: 1px solid #21262D;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+    .flex-stats {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    .stat-item {
+      background: #0D1117;
+      padding: 0.8rem 1.5rem;
+      border-radius: 40px;
+      border: 1px solid #30363D;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+    }
+    .stat-item strong { color: #58A6FF; }
+
+    /* ----- gráficos / imágenes externas ----- */
+    .graph-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1.2rem 0;
+    }
+    .graph-row img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      background: #0D1117;
+      border: 1px solid #21262D;
+    }
+    .graph-full {
+      width: 100%;
+      border-radius: 12px;
+      background: #0D1117;
+      border: 1px solid #21262D;
+      margin: 0.5rem 0;
+    }
+
+    /* ----- perfil / about ----- */
+    .perfil-destacado {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1.2rem;
+      background: #161B22;
+      border-radius: 40px;
+      padding: 1.2rem 2rem;
+      border: 1px solid #30363D;
+      margin-bottom: 1.8rem;
+    }
+    .perfil-destacado .avatar {
+      background: #238636;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: #0D1117;
+      flex-shrink: 0;
+    }
+    .perfil-destacado .desc {
+      flex: 1;
+    }
+    .perfil-destacado .desc p {
+      margin: 0.2rem 0;
+      line-height: 1.5;
+    }
+
+    /* ----- proyectos ----- */
+    .proyectos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    .proyecto-card {
+      background: #0D1117;
+      border: 1px solid #21262D;
+      border-radius: 14px;
+      padding: 1rem 1.2rem;
+      transition: 0.2s;
+    }
+    .proyecto-card:hover { border-color: #58A6FF; }
+    .proyecto-card a { font-weight: 500; display: inline-block; margin-top: 0.3rem; }
+
+    /* ----- footer / conectemos ----- */
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.2rem 2.5rem;
+      margin: 2rem 0 1rem;
+      font-size: 1.1rem;
+    }
+    .footer-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    /* responsive */
+    @media (max-width: 600px) {
+      h1 { font-size: 1.8rem; }
+      .perfil-destacado { flex-direction: column; text-align: center; padding: 1.5rem; }
+      .stat-item { padding: 0.5rem 1rem; font-size: 0.85rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="pwa-container">
+
+  <!-- HEADER + TYPING -->
+  <div style="text-align: center; margin: 0.5rem 0 1rem;">
+    <h1>💻 Lilliana Uribe González</h1>
+    <div style="font-size: 1.2rem; color: #58A6FF; font-weight: 400; min-height: 3rem;">
+      <span id="typing-text"></span>
+    </div>
+    <div style="margin-top: 0.5rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem;">
+      <a href="https://github.com/LillianaU" target="_blank"><img src="https://img.shields.io/badge/GitHub-LillianaU-181717?logo=github&style=flat-square" alt="GitHub" /></a>
+      <a href="https://www.youtube.com/@lillianauribeg7317" target="_blank"><img src="https://img.shields.io/badge/YouTube-Lilliana%20Uribe%20G-FF0000?logo=youtube&style=flat-square" alt="YouTube" /></a>
+    </div>
+  </div>
+
+  <!-- PERFIL -->
+  <div class="perfil-destacado">
+    <div class="avatar">LU</div>
+    <div class="desc">
+      <p>✨ <strong>¡Hola!</strong> Soy <strong>Lilliana Uribe González</strong>, apasionada por el <strong>desarrollo fullstack</strong>, la educación tecnológica y la creación de soluciones que conectan el aprendizaje con la innovación.</p>
+      <p>💻 Como <strong>Ingeniera de Sistemas</strong>, aplico buenas prácticas de <strong>programación orientada a objetos</strong> y promuevo el <strong>código limpio y estructurado</strong>.</p>
+    </div>
+  </div>
+
+  <!-- TECNOLOGÍAS (resumen) -->
+  <h2>🛠️ Tecnologías y Herramientas</h2>
+  <div class="card-section">
+    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem 0.8rem;">
+      <span class="tech-badge"><i>🌐</i> HTML5 · CSS3 · JS · React · Vue · Tailwind · Bootstrap</span>
+      <span class="tech-badge"><i>⚙️</i> Node.js · PHP · Laravel · Java · Python · FastAPI · C#</span>
+      <span class="tech-badge"><i>🗄️</i> MySQL · SQL Server · MongoDB</span>
+      <span class="tech-badge"><i>🧠</i> Pandas · NumPy · OpenCV</span>
+      <span class="tech-badge"><i>🧰</i> Git · GitHub · Postman · Swagger · ReDoc</span>
+    </div>
+    <!-- badges visuales rápidos -->
+    <div class="badge-grid" style="margin-top: 0.8rem;">
+      <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white" alt="HTML5" />
+      <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white" alt="CSS3" />
+      <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black" alt="JS" />
+      <img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=black" alt="React" />
+      <img src="https://img.shields.io/badge/Vue.js-35495E?style=flat&logo=vue.js&logoColor=4FC08D" alt="Vue" />
+      <img src="https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white" alt="Node" />
+      <img src="https://img.shields.io/badge/PHP-777BB4?style=flat&logo=php&logoColor=white" alt="PHP" />
+      <img src="https://img.shields.io/badge/Java-007396?style=flat&logo=java&logoColor=white" alt="Java" />
+      <img src="https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white" alt="Python" />
+      <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=mysql&logoColor=white" alt="MySQL" />
+      <img src="https://img.shields.io/badge/MongoDB-47A248?style=flat&logo=mongodb&logoColor=white" alt="MongoDB" />
+      <img src="https://img.shields.io/badge/Git-F05032?style=flat&logo=git&logoColor=white" alt="Git" />
+    </div>
+  </div>
+
+  <!-- ÁREAS DE ESPECIALIZACIÓN -->
+  <h2>💡 Áreas de Especialización</h2>
+  <div class="card-section" style="display: flex; flex-wrap: wrap; gap: 0.5rem 1.2rem;">
+    <span>🌐 Desarrollo Web Fullstack</span> · <span>⚙️ POO</span> · <span>🧹 Código limpio</span> ·
+    <span>🧮 Ciencia de Datos (Python, Pandas, NumPy)</span> · <span>🧠 OpenCV</span> ·
+    <span>📊 APIs RESTful</span> · <span>💾 BD relacionales y NoSQL</span> ·
+    <span>📚 Creación de contenido educativo</span> · <span>🎯 Apps responsivas</span>
+  </div>
+
+  <!-- ESTADÍSTICAS DE DESARROLLO (con fallback a shields.io para evitar 503) -->
+  <h2>📈 Estadísticas de Desarrollo</h2>
+  <div class="card-section">
+    <div class="flex-stats">
+      <div class="stat-item"><strong>Repositorios</strong> <img src="https://img.shields.io/github/repo-size/LillianaU?style=flat-square&color=58A6FF" alt="repo-size" /></div>
+      <div class="stat-item"><strong>Proyectos</strong> <img src="https://img.shields.io/badge/dynamic/json?color=58A6FF&label=&query=public_repos&url=https://api.github.com/users/lillianau&style=flat-square" alt="proyectos" /></div>
+      <div class="stat-item"><strong>Seguidores</strong> <img src="https://img.shields.io/github/followers/lillianau?style=flat-square&color=58A6FF" alt="followers" /></div>
+    </div>
+    <div style="margin-top: 0.8rem; display: flex; flex-wrap: wrap; gap: 0.5rem 0.8rem; justify-content: center;">
+      <img src="https://img.shields.io/badge/dynamic/json?color=58A6FF&label=📁%20Públicos&logo=github&query=public_repos&url=https://api.github.com/users/lillianau&style=for-the-badge" alt="public" />
+      <img src="https://img.shields.io/badge/dynamic/json?color=238636&label=🔒%20Privados&logo=github&query=total_private_repos&url=https://api.github.com/users/lillianau&style=for-the-badge" alt="private" />
+      <img src="https://img.shields.io/badge/dynamic/json?color=58A6FF&label=📊%20Total&logo=github&query=%24.public_repos+%2B+%24.total_private_repos&url=https://api.github.com/users/lillianau&style=for-the-badge" alt="total" />
+      <img src="https://img.shields.io/github/followers/lillianau?label=👥%20Seguidores&style=for-the-badge&color=58A6FF&logo=github" alt="followers-badge" />
+      <img src="https://img.shields.io/github/stars/lillianau?label=⭐%20Estrellas&style=for-the-badge&color=58A6FF&logo=github" alt="stars" />
+    </div>
+  </div>
+
+  <!-- RACHA Y LOGROS (imágenes externas, con fallback si no cargan) -->
+  <h2>🔥 Racha y Logros</h2>
+  <div class="card-section">
+    <div class="graph-row">
+      <img src="https://github-readme-streak-stats.herokuapp.com/?user=lillianau&theme=github-dark-blue&hide_border=true&background=0D1117&ring=58A6FF&fire=58A6FF&currStreakLabel=58A6FF" width="49%" alt="racha" />
+      <img src="https://github-profile-trophy.vercel.app/?username=lillianau&theme=onedark&no-frame=true&row=2&column=3&margin-w=15&margin-h=15" width="49%" alt="trofeos" />
+    </div>
+  </div>
+
+  <!-- CALENDARIO + ACTIVIDAD (reemplazo de los que daban 503) -->
+  <h2>📅 Actividad y Contribuciones</h2>
+  <div class="card-section">
+    <div style="text-align: center; margin-bottom: 1rem;">
+      <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=lillianau&theme=github_dark&hide_border=true" alt="detalle contribuciones" style="width:100%; max-width:900px; border-radius:12px;" />
+    </div>
+    <div style="text-align: center;">
+      <img src="https://github-readme-activity-graph.vercel.app/graph?username=lillianau&theme=react-dark&bg_color=0D1117&hide_border=true&area=true&point=58A6FF&line=58A6FF&custom_title=Actividad%20Diaria%20de%20Código" alt="actividad diaria" style="width:100%; max-width:900px; border-radius:12px;" />
+    </div>
+    <!-- lenguaje predominante (alternativo) -->
+    <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: 1.5rem;">
+      <img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=lillianau&theme=github_dark" alt="lenguajes repos" style="border-radius:12px;" />
+      <img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=lillianau&theme=github_dark" alt="lenguajes commits" style="border-radius:12px;" />
+    </div>
+  </div>
+
+  <!-- PROYECTOS DESTACADOS -->
+  <h2>📚 Proyectos Destacados</h2>
+  <div class="proyectos-grid">
+    <div class="proyecto-card"><strong>🚀 TutorialPython</strong><br />Curso práctico de introducción a Python.<br /><a href="https://github.com/LillianaU/TutorialPython" target="_blank">Ver repositorio →</a></div>
+    <div class="proyecto-card"><strong>🔧 ApiRES</strong><br />API REST completa en PHP.<br /><a href="https://github.com/LillianaU/ApiRES" target="_blank">Ver repositorio →</a></div>
+    <div class="proyecto-card"><strong>📄 ExportacionPDF</strong><br />Exportación de datos a PDF dinámica.<br /><a href="https://github.com/LillianaU/ExportacionPDF" target="_blank">Ver repositorio →</a></div>
+    <div class="proyecto-card"><strong>🛠️ EjemploCrudPhp</strong><br />Sistema CRUD en PHP y MySQL.<br /><a href="https://github.com/LillianaU/EjemploCrudPhp" target="_blank">Ver repositorio →</a></div>
+  </div>
+
+  <!-- TECNOLOGÍAS ADICIONALES (backend / mobile) -->
+  <h2>🧩 Backend & Mobile</h2>
+  <div class="card-section" style="display: flex; flex-wrap: wrap; gap: 0.8rem 1.2rem;">
+    <span><img src="https://img.shields.io/badge/Django-Web%20Framework-092E20?style=flat&logo=django&logoColor=white" alt="Django" /></span>
+    <span><img src="https://img.shields.io/badge/FastAPI-Web%20Framework-05998B?style=flat&logo=fastapi&logoColor=white" alt="FastAPI" /></span>
+    <span><img src="https://img.shields.io/badge/Laravel-Web%20Framework-FF2D20?style=flat&logo=laravel&logoColor=white" alt="Laravel" /></span>
+    <span><img src="https://img.shields.io/badge/Flutter-Mobile%20Framework-02569B?style=flat&logo=flutter&logoColor=white" alt="Flutter" /></span>
+    <span><img src="https://img.shields.io/badge/Kivy-GUI%2FMobile-00B140?style=flat&logo=python&logoColor=white" alt="Kivy" /></span>
+  </div>
+
+  <!-- IMPACTO Y NOTA -->
+  <h2>🎯 Impacto y Contribuciones</h2>
+  <div class="card-section">
+    <p><strong>Total de Commits:</strong> Contribuciones activas a proyectos personales y open source.</p>
+    <p><strong>Proyectos Destacados:</strong> <a href="https://github.com/LillianaU" target="_blank">Visita mi GitHub</a> para explorar más.</p>
+    <p><strong>Colaboraciones:</strong> Participación en proyectos educativos y comunitarios.</p>
+    <p style="margin-top: 0.8rem; color: #8B949E;">⭐ <em>Estas estadísticas se actualizan automáticamente. ¡Mantén tu código en movimiento!</em></p>
+  </div>
+
+  <!-- FOOTER CONECTEMOS -->
+  <div class="footer-links">
+    <a href="https://www.youtube.com/@lillianauribeg7317" target="_blank">🔗 YouTube: Lilliana Uribe G</a>
+    <a href="https://github.com/LillianaU" target="_blank">🔗 GitHub: LillianaU</a>
+  </div>
+  <div style="text-align: center; color: #8B949E; font-size: 0.95rem; margin-top: 0.5rem;">
+    “La tecnología es más poderosa cuando se comparte.” 🚀
+  </div>
+</div>
+
+<script>
+  (function() {
+    // Typing effect (simulación con frases)
+    const phrases = [
+      'Ingeniera de Software',
+      'Desarrolladora Backend',
+      'Apasionada por la Arquitectura de Software',
+      'Fullstack & Data Science'
+    ];
+    const el = document.getElementById('typing-text');
+    let idx = 0, charIdx = 0, isDeleting = false;
+    let currentText = '';
+
+    function typeEffect() {
+      const full = phrases[idx];
+      if (isDeleting) {
+        currentText = full.substring(0, charIdx - 1);
+        charIdx--;
+      } else {
+        currentText = full.substring(0, charIdx + 1);
+        charIdx++;
+      }
+      el.textContent = currentText;
+
+      let speed = isDeleting ? 30 : 50;
+      if (!isDeleting && charIdx === full.length) {
+        speed = 1800; // pausa al final
+        isDeleting = true;
+      } else if (isDeleting && charIdx === 0) {
+        isDeleting = false;
+        idx = (idx + 1) % phrases.length;
+        speed = 400;
+      }
+      setTimeout(typeEffect, speed);
+    }
+    typeEffect();
+  })();
+
+  // (Opcional) registro de service worker para PWA
+  if ('serviceWorker' in navigator) {
+    // Para que sea PWA, se puede registrar un sw, pero al ser todo inline no es necesario.
+    // Solo se añade para que el navegador lo detecte como instalable.
+    // No se necesita un archivo externo, el manifest ya está embebido.
+    console.log('PWA listo para instalar (manifest inline)');
+  }
+</script>
+</body>
+</html>
